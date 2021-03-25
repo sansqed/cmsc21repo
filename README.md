@@ -9,7 +9,7 @@ Given a year, a day, and a month, display 2 things:
 1. the day of the week that date falls on
 2. what day of the year it is.
 
-
+    
 ### **Functions**
 
 - `int isLeapYear(int y);`\
@@ -132,3 +132,130 @@ For instance,
 - `void mooreNeighborhood (PixelGrid *pG, int y, int x);`\
     Uses the moore neighborhood algorithm to search neighboring pixels for a `1`.\
     If `1` is found, recursively goes through all the neighbors, given the pixel is undiscovered (discovered==0)
+
+---
+
+## Sorting `exer5.c`
+Sorting Algorithm: Insertion sort.\
+Sort the array using pointers and the `+` operator
+
+### **Functions**
+- `void insertionSort (int *arr, int size);`\
+    Loops entirety of array and checks if an element is unsorted\
+    if unsorted, runs `insert()`
+
+- `void insert (int *arr, int item);`\
+    Used in conjuction with `insertionSort()`\
+    Inserts `item` to a certain index in the array to make it relatively sorted
+
+- `void printArray(const int *arr, int size);`\
+    Prints the array
+
+---
+
+## Snakes and Ladders game `exer6.c`
+A Snakes and Ladders game with randomized locations of the snakes and ladders
+
+### **Structures**
+- `Player`\
+  Stores the x-y coordinates of the player
+
+- `Snake` and `Ladder`\
+    Stores the `startX`, `startY`, `endX`, and `endY` coordinates used in the game
+
+### **`#define` declarations**
+- `NPLAYERS`\
+    Number of players playing the game, max of 4
+
+- `NSNAKES` and `NLADDERS`\
+    Number of snakes and ladders in the game
+
+### **Functions**
+- `void printBoard (Snake *snakeArr, Ladder *ladderArr, Player *playerArr);`\
+    Prints the board with the game data
+
+- `void initSnakesLadders (Snake *snakeArr, Ladder *ladderArr);`\
+    Initializes the snakes and ladders
+    randomizes the start and end coordinates for snake and ladder\
+    while randomizing, it checks if the snakes and ladders are valid (goodSnake and niceLadder)\
+    ***VALID if***
+     - starting row of snake < ending row of snake && ending row of ladder < starting row of ladder
+     - coordinates are unique
+     - doesnt start or end at the starting or ending cells
+     - have enough diversity in length and distance from other snakes/ladders
+
+- `void initPlayers (Player *playerArr);`\
+    Intialize players to starting location [y-x coordinate (9,0)]
+
+- `int locateSnake (Snake *snakeArr, int y, int x, int mode);`\
+    Locates the snake with the same y-x coordinate as the arguments\
+    Has 2 modes 
+    - `mode == -1`
+        - Checks ALL snakes for matching coordintes in parameters
+        - Returns 0 if y-x coordinate is the start of snake,
+        - Returns 1 if end of snake
+        - If neither, returns -1
+    - `mode !=- 1`
+         - Checks snake indexes 0 to ([mode]-1) for matching coordinates
+         - Returns 1 if it has matching coord, else 0
+         - Is used to verify if snake is unique or not
+
+- `int isGoodSnake(Snake *snakeArr, int index);`\
+    Assesses if snake or snake group is VALID\
+    - Index accepts from -1 to `NSNAKES` 
+        - if -1, evaluates entire `snakeArr` if all are good snakes
+        - else, do checks to `snakeArr[index]` if snake is good
+
+    Returns Boolean
+
+- `int checkSnake (Snake *s, int y, int x);`\
+    Checks if Snake s has the same coordinate as the arguments or not\
+    Returns boolean
+
+- `int locateLadder (Ladder *ladderArr, int y, int x, int mode);`\
+    Locates the ladder with the same y-x coordinate as the arguments\
+    Has 2 modes 
+    - `mode == -1`
+        - checks ALL ladders for matching coordintes in parameters\
+        - Returns 0 if y-x coordinate is the start of ladder,
+        - Returns 1 if end of ladder
+        - If neither, returns -1
+    - `mode !=- 1`
+        - checks ladder indexes 0 to `([mode]-1)` for matching coordinates
+        - Returns 1 if it has matching coord, else 0
+        - Is used to verify if ladder is unique or not    
+
+- `int isNiceLadder (Ladder *ladderArr, Snake *snakeArr, int index);`\
+    Assesses if ladder or group of ladder is VALID
+    - Index accepts from -1 to NLADDERS 
+        - if -1, evaluates ENTIRE ladderArr if all are VALID
+        - else, do checks to snakeArr[index] if snake is good
+
+    Returns Boolean
+
+- `int checkLadder (Ladder *l, int y, int x);`\
+    Checks if Ladder l matches the y-x coordinate\
+    Returns 1 if match, else 0
+
+- `int locatePlayer(Player *p, int y, int x);`\
+    Checks if (y,x) coord matches Player p coordinates\
+    Returns boolean
+
+- `int movePlayer (Player *p, Snake *snakeArr, Ladder *ladderArr, int moves);`\
+    Moves Player p given [moves]
+    - Return codes
+        - -1 no winner
+        - 0 player exceeds moves needed to win
+        - 1 Player p won
+
+- `int checkLanding (Snake *snakeArr, Ladder *ladderArr, Player *p);`\
+    Checks if Player p lands on a snake or ladder\
+    Return codes (2 digits) indicate what the player landed on (1 for snake, 2 for ladder) [tenth digit] and the index [ones digit]
+
+- `int randNum(int n);`\
+    Generate random numbers\
+    `n` is there to add something to the system time (used as seed for generating random numbers) since running this function successively returns the same number
+
+- `int absol (int n);`\
+    Takes absolute value of `n`
+

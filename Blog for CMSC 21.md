@@ -14,6 +14,12 @@ I'm looking forward to the upcoming weeks for much more challenging coding exerc
 
 ---
 ## Week 2
+
+### 2D Arrays
+2D arrays are just like boxes inside boxes. 
+
+Imagine a scenario where you bought a lot of cellphones from different sellers as a giveaway for some event. Usually, and if bought legitemately, each phone will be enclosed inside a box. Inside these phone boxes are other boxes that contain the charger and other accessories. If, for some reason, you need to *borrow* one of these included accessories, you first need to locate which phone model/brand it belongs, then when you open the correct phone box, you have to locate the correct box where it is packed. The same is true for 2D arrays, sans the suspiciousness. 
+
 ### Tic-tac-toe
 
 At first I planned to make a 1D array with a size of 18 where the x and y coordinates of the X and O are adjacent to one another and I just had to loop through every other element. 
@@ -71,3 +77,68 @@ Also wrote a `createGrid` function with a PixelGrid return type to take care of 
 All was fairly smooth until I wrote the algorithm for the object counting part. I initially planned to use the algorithm I found online where it searches for the first instance of a 1 in the neighboring pixels (clockwise) but the pseudocode was really confusing. To finish this exercise, I decided to use Sir Eli's code as reference for this part. The use of `discover` variable in my `Pixel` struct made the algorithm simpler and I just had to create a counter variable to count the objects since it would just have the same functionality as the `group` variable. I also made the `PixelGrid` a pointer since I will be changing its values in this function.
 
 Also, up until this point, I haven't uploaded this blog to a website. I already made a wordpress site but I don't want to waste my time configuring the UI. Then I realized that I could just upload it on hackmd, taking inspiration from Sir Rub. That way, I can also write codes in my blog.
+
+---
+
+## Week 3 and 4 {#week-3-4}
+
+### Pointers
+
+An analogy for pointers would be... the social "dance" when you're trying to ask someone out for a date and you ask the help of a wingman--the wingman is the pointer. 
+
+When initializing a pointer, you first indicate what data type you want it to point, then the memory address of the variable using the `&` if not an array. When you want to change the value of the pointed variable, you use the `*` or the `->` operators. You can also change the variable it points by using the `&` operator again, or the `+` operator for arrays. 
+
+Likewise, when you ask the help of a wingman, you specify your *type* (gender, physical appearance, qualities, etc.), then you tell them your potentials (similar to the `&` operator). When you have something to say to the person you're asking out, you tell the wingman "Tell them I said *bla bla bla*" (similar to the `*` and `->` operators). When you realize you have no chance of having a date, you could tell the wingman your next potentials (similar to the `&` and `+` operators). 
+
+### Sorting
+
+I decided to use insertion sort to to sort the array. At first I had a hard time creating the algorithm but after writing it down on a whiteboard and breaking down its steps, I kinda got an idea and started coding it. I wasn't sure how to reassign the elements in the array using pointers so I wrote a `test()` function and figured that `*(arr+i)` would just work. There was a problem when I first run the program, but after debugging, I was just being careless and added 1 instead of subtracting 1 lmao. 
+
+Insertion sort works by starting from the second element in the array until the last, searching for an element that's unorder (i.e. less than the previous element). If it detects one, it locates the index where, when *inserted*, makes the array more sorted. The insertion works by moving the other elements to the right to make room for insertion. When the outer loop (i.e. the loop that detects an unordered element) traverses the entirety of the array, the array is deemed to be sorted. This algorithm has a time complexity of $O(n^2)$.
+
+This table shows the process of insertion sort
+
+
+|Steps|     |     |     |     |     |
+|-----|-----|-----|-----|-----|-----|
+|  0  |  4  |  3  |  5  |  2  |  1  |
+|  1  | [4] |**3**|  5  |  2  |  1  |
+|  2  |  3  |  4  |  5  |  2  |  1  |
+|  3  | [3] | [4] | [5] |**2**|  1  |
+|  4  |  2  |  3  |  4  |  5  |  1  |
+|  5  | [2] | [3] | [4] | [5] |**1**|
+|  6  |  1  |  2  |  3  |  4  |  5  |
+
+**Step 0** is the original unsorted array\
+**Step 1** considers the 3 (in bold) as out of order and shifts 4 (inside square brackets) to the right to insert 3\
+**Step 2** is the relatively ordered array\
+**Step 3** considers 2 as out of order and shifts all the square-bracketed elements to the right and inserts 2 at index 0\
+**Step 4** is the relatively ordered array\
+**Step 5** considers 1 as out of order and shifts all the square-bracketed elements to the right and inserts 1 at index 0\
+**Step 6** is the ordered array
+
+### Snakes and Ladders
+This exercise was really a challenge. At first, the exercise seemed relatively simple, but I realized that there are a lot of validation checks and algorithms needed to be implemented to make a valid Snakes and Ladders game. 
+
+**First** is the randomization of the locations for the snakes and ladders. You can't just randomize the locations of the snakes and ladders and call it a day—there are certain conditions needed to make the snakes and ladders valid:
+
+1. The head of the snake must be above the tail, and the start of the ladder must be below its end.
+2. Both snakes and ladders must not start and end at locations (0,0) *\[the final cell where the winner is decided\]* and (9,0) *\[the starting cell for all players\]*
+3. The locations of the snakes and ladders must be unique.
+
+Furthermore, to make the game interesting, 
+
+4. there has to be enough diversity in the lengths of the snakes and ladders, 
+5. as well as its spacing from one another. 
+   
+To implement these conditions, I wrote a function to validate each snake and ladder for conditions 1, 2, and 3, and evaluate the snake and ladder arrays (i.e. evaluate the arrays as one) for conditions 4 and 5. I further wrote functions to implement specific tasks such as traversing the array to look for certain `x` and `y` values and detecting if the values for each snake and ladder are unique. 
+
+**Second,** the player moves in a zigzag pattern along the board. Since I approached this with a 2D array in mind (but didn't really implemented a 2d array to make it less confusing), I had to decrement the `y` value everytime the player reaches the border and changes rows (since the topmost row is 0 and the bottommost is 9). Moreover, I had to reset the `x` value to the corresponding border and subtract the moves it took to reach the border from the total moves (i.e. the rolled dice). There is also a special condition when the player reaches the topmost row (row 0), specifically when it approaches the final cell. The player should roll the exact moves needed to win, else the player loses the turn. However, there are some rules that made the player *bounceback* when it rolls an inexact number; I chose to implement the former. 
+
+**Third,** the dice rolls and the locations for each snake and ladder must be randomized. Using the system time as a seed, randomizing the dice was easy. However, due to the successiveness of initializing the snakes and ladders within a loop, the system doesn't have enough delay to change the time. Hence, I decided to add a number to the system time, and increment the it every randomization. Moreover, I also wrote a `sleep(1)` as a delay to allow the system to change the time, making the randomization even more varied. 
+
+**Finally,** for some reason, there are certain bugs that I'm not sure how it was introduced. I was sure that my algorithm was correct, and yet some return values were unexpected and some conditions didn't work. For instance, when a player lands on a ladder, the program should print `A lands on a ladder and goes up 6 rows` or something like that, but it didn't. After hours of testing and writing `printf` statements on various locations in my code, I deduced that it was due to a certain function returning an incorrect value. To fix this, I just made another function to do this task, then it worked fine.
+
+Furthermore, to make the game more customizable, I defined the values for the number of players playing the game and the number of snakes and ladders at the start of my code. Though the maximum number of players is just 4 because of the grid.
+
+I have many improvements in mind that would make the program more efficient and more customizable, like having an array that stores the letters of the players instead of using A, B, C, and D, or just reusing functions to do certain task, but I don't want to ruin the working program so I'll just have to settle with this. Afterall, a program is never finished. 

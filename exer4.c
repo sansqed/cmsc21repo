@@ -87,7 +87,8 @@ void printGrid(PixelGrid pG){
     return;
 }
 
-// uses the moore neighborhood algorithm
+//Uses the moore neighborhood algorithm to search neighboring pixels for a 1.
+// If 1 is found, recursively goes through all the neighbors, given the pixel is undiscovered (discovered==0)
 void mooreNeighborhood (PixelGrid *pG, int y, int x){
 
     // returns if pixel already discovered
