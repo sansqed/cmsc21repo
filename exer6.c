@@ -338,6 +338,7 @@ int locateSnake (Snake *snakeArr, int y, int x, int mode){
 
 }
 
+// checks if Snake s has the same coordinate as the arguments or not
 int checkSnake (Snake *s, int y, int x){
     if ((s->startY == y && s->startX == x) || (s->endY == y && s->endX == x))
         return 1;
@@ -438,6 +439,7 @@ int locatePlayer(Player *p, int y, int x){
     return 0;
 }
 
+// checks if Ladder l matches the y-x
 int checkLadder (Ladder *l, int y, int x){
     if ((l->startY == y && l->startX == x) || (l->endY == y && l->endX == x))
         return 1;
