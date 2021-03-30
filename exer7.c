@@ -162,7 +162,8 @@ Fraction division (Fraction a, Fraction b){
     return quotient;
 }
 
-// simplify the fraction using gcf()
+// simplify the fraction
+// finds the gcf of numererator and denominator and divides it with gcf
 void simplify (Fraction *f){
 
     // for negative denominators
