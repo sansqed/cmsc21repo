@@ -137,3 +137,13 @@ To implement these conditions, I wrote a function to validate each snake and lad
 Furthermore, to make the game more customizable, I defined the values for the number of players playing the game and the number of snakes and ladders at the start of my code using `#define`. Though the maximum number of players is just 4 because of the limitations of the grid.
 
 I have several improvements in mind that would make the program more efficient and more customizable, like having an array that stores the letters of the players instead of just using A, B, C, and D everytime, or just reusing functions to do certain tasks, or perhaps rethinking my algorithms. But I don't want to ruin the working program so I'll just have to settle with this and save myself some headaches. Afterall, programs are never really finished. 
+
+---
+
+## Week 5
+### Dynamic Memory Allocation
+Reading the course notes, I kinda got an idea when and how to use `malloc()` and `free()`. However, I think I need a programming exercise where I can use those functions to fully understand their use cases and how they are used with other C functions and the nuances associated with using them. Perhaps, next week's exercises will be more exciting. 
+
+To me, the idea of manually allocating the memory is interesting and I'm sure it will prove useful in the future and with more complex programs. After all, one of the perks of starting with the C language is being able to encounter and use functions that deal with deeper level functionalities. However, I don't think that dynamically allocating memories is appropriate in all cases. There are still some instance where a static memory is applicable and more convinient. For instance, if a variable or array will only be used once or has simple purpose in the overall code, static memory should just be fine. However if the said variable or array will store values that will get larger as the program progresses, dynamically allocating it would be more efficient.
+
+I remember when I told my cousin, who is familiar with programming, that we are starting with the C language. He told me that the curriculum should've used more human-readable and easier languages like Python. However, I think for a computer science student, being acquianted and having deep knowledge about system-level programming is one of the essence of the course. Knowing how to code in old and low-level languages will be beneficial to us since we will understand how the computer will behave without the help of a more lenient language. Being immersed in difficult and unforgiving languages will make the high-level ones easier. 

@@ -259,3 +259,44 @@ A Snakes and Ladders game with randomized locations of the snakes and ladders
 - `int absol (int n);`\
     Takes absolute value of `n`
 
+---
+
+## Fractions `exer7.c`
+### **Structure**
+- `Fraction`
+    - `int nume` $\to$ numerator
+    - `int denom` $\to$ denominator
+
+### **Functions**
+- `Fraction add (Fraction a, Fraction b);`\
+    Addition of fractions
+
+- `Fraction subtract (Fraction a, Fraction b);`\
+    Subtraction of fractions
+
+- `Fraction multiply (Fraction a, Fraction b);`\
+    Multiplication of fractions
+
+- `Fraction division (Fraction a, Fraction b);`
+    Division of fractions
+
+- `Fraction getFraction ();`\
+    Prompts user input for the fraction values\
+    - If player inputs '/', denominator is asked\
+    - Else, denominator is automatically 1
+
+- `void printFraction (Fraction f);`\
+    Prints the fraction\
+    If denominator is 1, only print numerator
+
+- `int gcf(int a, int b);`\
+    Euclidean algorithm for finding gcf\
+    Recursive
+
+- `void simplify (Fraction *f);`\
+    Simplify the fraction\
+    Finds the gcf of numererator and denominator and divides it with gcf
+
+- `int absol (int n);`\
+    Get absolute value of `n`
+
