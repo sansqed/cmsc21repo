@@ -300,3 +300,139 @@ A Snakes and Ladders game with randomized locations of the snakes and ladders
 - `int absol (int n);`\
     Get absolute value of `n`
 
+---
+
+## Strings `exer8.c`
+Accept an integer choice (1 - 2), accept string arguments (at most 15 characters each) and perform an operation based on the following choice inputs:
+
+Choice input 1: 2 strings follow---A and B; print out the concatenation of A and B\
+Choice input 2: 3 arguments follow, 1 string---A and 2 integers---B and C; print out the slice of A from B to C.
+
+### **Structures**
+- `Vector`
+  - int size; $\to$ stores the length of string
+  - int capacity;  $\to$ stores the capacity of string, 10 at first
+  - char *str; $\to$ stores the string
+
+### **Functions**
+- `void initString(Vector* vecString, char* string);`\
+    accept string, insert string into Vector
+
+- `void concatenate(Vector* combined, Vector* a, Vector* b);`\
+    concat Vector a & b, put result in Vector combined
+
+- `void slice(Vector* sliced, Vector* source, int start, int end);` \
+    takes a portion of source starting from start and ends at end - 1
+
+- `void initVector(Vector *v);` \
+    Initializes the vector.\
+    size = 0, capacity = 10, str is dynamically allocated
+- `void printVector (Vector *v);`\
+    Prints the string in the vector
+- `int strLen (char *str);`\
+    Returns the length of the string
+- `void resize (Vector *v, int size);`\
+    Resize the vector\
+    accepts Vector v and size >= -1
+    - if size == -1, double the size of v
+    - else, make size of v = size
+
+## Student Information System `exer9.c`
+### **Structures**
+- Student
+  - `char studNum[15];` $\to$ stores student number, hyphenated, at most 15 chars
+  - `char lastName[15], firstName[15];`  $\to$ stores student's last and first name, should not have spaces, at most 15 chars
+  - `char course[15];` 
+  - `int yrLevel;`
+  - `int age;` $\to$ age >= 0
+  - `char sex;` $\to$ 'M' or 'F'
+  - `int finalGrade;` $\to$ 0 - 100, 60 passing
+
+  - `struct Student *next;` $\to$ pointer to the next student in the list
+- SRecord
+  - `Student *head;` $\to$ pointer to the head of student record
+  - `Student *tail;` $\to$ pointer to the tail of the student record
+  - `int size;` $\to$ size of the record, how many students are in the student record
+
+### **Functions**
+- `void menu ();`
+```
+    STUDENT INFORMATION SYSTEM
+1. Enrol a student
+2. Drop a student
+3. Edit a student
+4. Display all students
+5. Filter students by last name
+6. Filter students by student number
+7. Filter students by year level
+8. Filter students by course
+9. Filter students by sex
+10. Filter students by passing
+11. Filter students by failing
+12. Sort students by last name
+13. Sort students by student number
+14. Exit
+```
+
+- `void printStudent (Student *s, int mode);`\
+    Prints student info\
+    2 modes: 
+    - mode 0 -> print specific student info
+    - mode 1 -> prints editable student info
+
+- `Student *initStudent ();`\
+    Prompts user to input student details
+
+- `void initRecord (SRecord *record);`\
+    Initialize record\
+    All values are zero (head, tail, and size)
+
+- `int enrolStudent (SRecord *record, Student *s);`\
+    Places the student at the end of the record\
+    Increments size of record
+
+- `void insertStudent(SRecord *record, Student *s, int index);`\
+    Inserts student in the record at index
+
+- `void dropStudent (SRecord *record, int index);`\
+    drops student from the record\
+    int index is the index of the student to be dropped\
+    adjusts the record to remove the student\
+    frees the memory allocated for that student
+
+- `void editStudent (SRecord *record, int index, int fieldToEdit);`\
+    edit student information\
+    fieldToEdit accepts an int 1-8, corresponding to student information
+
+- `void displayAllStudents (SRecord record);`\
+    display all students in the record
+
+- `void filterStudents (SRecord *record, int mode, char *detailToMatch);`\
+    filter students in the record depending on int mode\
+    int mode accepts 0-6 [last name, student number, year level, course, sex, passing, failing]\
+    detailToMatch is the detail needed for filtering
+
+- `void sortRecord (SRecord *record, int mode);`\
+    sorts the record depending on mode\
+    mode accepts 0-3 [sort by last name, student number, first name (iff multiple last names exist)]
+
+- `int strCmpLower (char *str1, char *str2);`\
+    compares the lowercase version of str1 and str2\
+    similar to strcmp
+    - returns 1 if str1 > str2
+    - returns -1 if str1 < str2
+    - returns 0 if str1 == str2
+
+- `int isStrSimilar (char *str1, char *str2);`\
+    compares if str1 and str1 are similar
+
+- `int getStudentIndex (SRecord record, char *studNum);`\
+    returns student index based on student number\
+    returns -1 if student not in record
+
+- `Student *getStudent (SRecord *record,int index);`\
+    gets student based on index in the record
+
+- `int isValidStudNum (char *str);`\
+    valid student number must contain only numbers and hyphen
+
