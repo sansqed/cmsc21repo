@@ -337,6 +337,8 @@ Choice input 2: 3 arguments follow, 1 string---A and 2 integers---B and C; print
     - if size == -1, double the size of v
     - else, make size of v = size
 
+---
+
 ## Student Information System `exer9.c`
 ### **Structures**
 - Student
@@ -435,4 +437,254 @@ Choice input 2: 3 arguments follow, 1 string---A and 2 integers---B and C; print
 
 - `int isValidStudNum (char *str);`\
     valid student number must contain only numbers and hyphen
+
+---
+
+## Zodiac signs `exer10.c` 
+
+File manipulation. Given a birth year, month, and day, display the zodiac sign and print out a fortune. The fortunes must be read from a file called `data.for`.
+
+### **Structures**
+- Date
+  - int year
+  - int month
+  - int day
+
+### **Functions**
+- `Date getDate();`\
+prompts user to enter date in the format [yyyy mm dd]
+
+- `int getZodSign (Date d);`\
+identifies the zodiac sign for a given date\
+return values with a range of [0,11]
+
+- `int isValidDate(Date d);`\
+checks if date is valid\
+checks d.month if d.day is within bounds of that month
+
+- `int *getDistanceFromStart (FILE *fp);`\
+returns an array that stores the distance of the first character of a line from start of file
+
+- `void writeToFile (FILE *fp, Date d);`\
+writes Date d to FILE fp
+
+- `int *zodCounter (FILE *fp);`\
+counts the number of occurence for a given zod sign in the file\
+returns an array of size 12
+
+---
+
+## Student Information System 2 `exer11.c`
+Similar to `exer9.c` but using file manipulation
+
+### **Structures**
+- Student
+    - int studNum                // 1-300
+    - char lastName[15], firstName[15]
+    - char course[15]
+    - int yrLevel
+    - int age
+    - char sex                       // M or F
+    - int finalGrade                 // (0 - 100, 60 passing)
+
+### **Functions**
+- `void menu ();`
+```
+    STUDENT INFORMATION SYSTEM
+1. Enrol a student
+2. Drop a student
+3. Edit a student
+4. Display all students
+5. Filter students by last name
+6. Filter students by student number
+7. Filter students by year level
+8. Filter students by course
+9. Filter students by sex
+10. Filter students by passing
+11. Filter students by failing
+12. Sort students by last name
+13. Sort students by student number
+14. Exit
+```
+
+- `void printStudent (Student s, int mode);`\
+prints student info\
+2 modes: 
+  - mode 0 -> print specific student info
+  - mode 1 -> prints editable student info
+
+- `Student initStudent ();`\
+prompts user to input student details
+
+- `void enrolStudent (FILE *fp, Student s);`\
+places the student at the end of the record
+
+- `void dropStudent (FILE *fp, int index);`\
+removes student from record
+
+- `void editStudent (FILE *fp, Student *s, int fieldToEdit);`\
+edit student information\
+fieldToEdit accepts an int 1-8, corresponding to student information
+
+- `void displayAllStudents (FILE *fp);`\
+display all students in the record
+
+- `void filterStudents (FILE *fp, int mode, char *detailToMatch);`\
+filter students in the record depending on int mode\
+int mode accepts 0-6\
+detailToMatch is the detail needed for filtering
+
+- `void sortRecord(FILE *fp, int mode);`\
+sort record depending on int mode\
+utilizies insertion sort algorithm
+  - mode 0: sort by last name
+  - mode 1: sort by student number
+  - mode 2: sort by first name if last name is similar
+
+
+- `int strCmpLower (char *str1, char *str2);`\
+compares the lowercase version of str1 and str2\
+similar to strcmp
+  - returns 1 if str1 > str2
+  - returns -1 if str1 < str2
+  - returns 0 if str1 == str2
+
+- `void updateFile ();`\
+replaces record.bin
+
+- `void copyFromFile (FILE *source, FILE *dest, int from, int to);`\
+copies student from the source file with the boundary int from and int to (won't include int to) to the destination file
+
+- `int getStudentIndex(FILE *fp, int studNum);`\
+returns the index (not file position) of the student with the student number
+
+- `void insert(FILE *fp, int index, int mode);`\
+insertion sort algorithm
+
+---
+
+## Fraction classes `exer12.cpp`
+Similar to `exer7.c` but in cpp and with classes
+
+### **Classes**
+- Fraction
+  - private:
+    - int nume
+    - int denom
+  - public:
+    - `void setFraction (int a, int b)`\
+    sets the values of the fraction\
+    `int a` is nume, `int b` is denom
+
+    - `void promptForFraction()`\
+    prompts user to enter fraction values\
+    calls `setFraction()`
+
+    - `void add (Fraction b)`\
+    adds this fraction to Fraction b
+
+    - `void subtract (Fraction b)`\
+    subtracts Fraction b from this fraction
+
+    - `void multiply (Fraction b)`\
+    adds this fraction with Fraction b
+
+    - `void divide (Fraction b)`\
+    divids this fraction over Fraction b
+
+    - `void simplify ()`\
+    simplifies this fraction
+
+    - `string getFraction ()`\
+    returns a string version of this fraction
+
+
+### **Functions**
+- `int gcf(int a, int b);`\
+returns gcf using euclidean algorithm
+
+- `int absol (int n);`\
+returns absolute value of n
+
+---
+
+## Rectangle Plot `exer13.cpp`
+Plots the rectangle on terminal. Calculate area, perimeter, center, and identifies if square or not.
+
+## **Classes**
+- Point
+  - private:
+    - float x, y
+  - public:
+    - `Point()`\
+    Constructor function for this class\
+    initiates x,y = 0
+
+    - `void initPoint (float a, float b)`\
+    initializes this point using values in parameter\
+    `x=a`, `y=b`
+
+    - `int getX()`\
+    returns the value of x of this point
+
+    - `int getY()`\
+    returns the value of y of this point
+
+    - `void printCoord()`
+    prints the coordinates of this point to the terminal with format `(x,y)`
+
+- Rectangle
+  - private:
+    - Point topLeft, botRight
+  - public:
+    - `void initRectangle (Point tl, Point br)`\
+    initializes the rectagle with Point tl and Point br
+
+    - `void promptForRectangle ()`\
+    promts user to enter coordinates of rectangle (user enters coord of 2 points)\
+    calls `initRectangle()` to initialize rectangle
+
+    - `void displayRectangle()`\
+    prints a series of `# ` for the rectangle's boudaries and `  ` (double spaces) for the rectangle's insides
+
+    - `int getArea ()`\
+    returns the area of the rectangle
+
+    - `int getPerimeter ()`\
+    returns the perimeter of the rectangle
+
+    - `Point getCenter()`\
+    returns the center of the rectangle
+
+    - `bool isSquare()`\
+    determines if this rectangle is square or not
+
+---
+
+## Package cost `exer14v2.cpp`
+### **Classes**
+- Package
+  - protected:
+    - static double weight, costPerKilo
+  - public:
+    - Package()
+    - Package(double Weight, double CostPerKilo)
+    - double calculateCost()
+
+- TwoDaysPackage : Package
+  - protected:
+    - double flatFee
+  - public:
+    - TwoDayPackage(double Weight, double CostPerKilo, double FlatFee)
+    - double calculateCost()
+
+- OverNightPackage : Package
+  - protected:
+    - double feePerKilo
+  - public:
+    - TwoDayPackage(double Weight, double CostPerKilo, double FlatFee)
+    - double calculateCost()
+  
+
+
 

@@ -125,7 +125,7 @@ Furthermore, to make the game interesting,
 
 4. there has to be enough diversity in the lengths of the snakes and ladders, as well as,
 5. enough spacing from one another. 
-   
+
 To implement these conditions, I wrote a function to validate each snake and ladder for conditions 1, 2, and 3, and evaluate the snake and ladder arrays (i.e. evaluate the arrays as one) for conditions 4 and 5. I further wrote functions to implement specific tasks such as traversing the array to look for certain `x` and `y` values and detecting if the values for each snake and ladder are unique. However, this method made the program clunky and sometimes it takes a while to find valid snakes and ladders. Now that I think of it, I could've first randomized either the start or end coordinates of the snakes and ladders and use that as initial point to randomize the other set of coordinates (e.g. randomize the `endY` value of the snake so that the `startY` value will just be a random number from 0 to `endY-1`). This could've made the validation process shorter. *Oh well.*
 
 **Second,** the player moves in a zigzag pattern along the board. Since I approached this with a 2D array in mind (but didn't really implemented a 2D array to make it less confusing), I had to decrement the `y` value (i.e. the row value) everytime the player reaches the border and changes rows (since the topmost row is 0 and the bottommost is 9). I also had to increment the `x` value for odd-numbered rows, and decrement it for even-numbered rows. Moreover, I had to reset the `x` value to the corresponding border and subtract the moves it took to reach the border from the total moves (i.e. the rolled dice). There is also a special condition when the player reaches the topmost row (row 0), specifically when it approaches the final cell. The player should roll the exact moves needed to win, else the player loses the turn. However, there are some rules that made the player *bounceback* when it rolls an inexact number; I chose to implement the former. 
@@ -148,6 +148,8 @@ To me, the idea of manually allocating the memory is interesting and I'm sure it
 
 I remember when I told my cousin, who is familiar with programming, that we are starting with the C language. He told me that the curriculum should've used more human-readable and easier languages like Python. However, I think for a computer science student, being acquianted and having deep knowledge about system-level programming is one of the essence of the course. Knowing how to code in old and low-level languages will be beneficial to us since we will understand how the computer will behave without the help of a more lenient language. Being immersed in difficult and unforgiving languages will make the high-level ones easier. 
 
+---
+
 ## Week 6 and 7
 ### Lists
 Lists are awesome!! I first heard about them while watching a Youtube video by Computerphile explaining pointers. At that time, I wasn't able to grasp the entirety of its content, but after rewatching it now, it all made sense. Though the video also introduced double pointers which I don't understand yet. I prefer the singly-linked list over the other lists presented in the course notes since it can be expanded easily. Sorting the singly-linked list is also relatively simple, algorithm-wise, compared to sorting arrays since I just have to change the `next` pointer of at most 3 variables. Conceptualizing the sorting algo was a challenge, but after creating another program to implement it in a much simpler list, I got the hang of it. 
@@ -157,3 +159,50 @@ I implemented the insertion sort in exercise 9 since there is already an `insert
 I had some difficulty doing the filtering of students in exercise 9. I initially planned to create another record to store the filtered list but I realized I need to make another instance of the student so that the `next` pointer won't change in the original student record. So instead, I just printed out the information of the student that matched the criteria. 
 
 And finally, I got tired of retyping every student information when testing the algorithms of the program so I just wrote an auto hotkey script that automatically types the information for me and I just have to press key combinations to trigger it. I might do the same for future exercises so that I can focus my time and energy on actually making my program work. 
+
+---
+
+## Week 8
+
+### File Handling
+
+Honestly, I still have a hard time getting used to the different functions and arguments involved in file handling. Plus, the addition of file-position pointers makes it more complicated. However, I kinda get the difference between sequential access and random-access. 
+
+Sequential access just reads the corresponding size of the data type from the file. For example, `int` has a size of 4 bytes in some compilers, and a `char` has a size of 1 byte. Using sequential access, we can have `fscanf(fp, "%d %c", &tempInt, &tempChar)` which gets an `int` and a `char` respectively from the file. However, this comes with drawbacks, since the order of these data types within the `fscanf()` function is important. Reversing the order (i.e. `"%c %d"`) would get different values. Additionally, the order in which these data types are encoded in the file must be the same when accessing them. This is prone to errors and bugs along the program. Another drawback is not being able to *jump* to different locations of the file since we cannot determine the location of the specific value we are looking for or its data type. Overwriting and updating files in sequential access can be quite chaotic since we aren't sure if we are changing the values of the next data because of the non-uniformity of the data types.
+
+Random-access, on the other hand, doesn't come with these drawbacks, given the file only contains one data type or struct. With random-access, we can be sure that each *block* of data within the file has the same size and we can just utilize the `fseek()` function to *jump* anywhere within the file and know that the file-location pointer is either at the start or end of a *block* of data. Random-access is kinda like having an array of a struct but is stored in a file. Reading and writing in random-access utilizes the original struct used in encoding the data into the file. Moreover, overwriting a *block* of data in random-access is more tamed compared to sequential access since each *block* is fixed and we don't have to worry about unnecessarily changing the values of the succeeding data. With more complex programs such as the Student Information System 2, I realized that using the `fseek()` function whenever accessing a specific data saves a lot of headaches. 
+
+Regarding the different file opening modes, I had a hard time at first because the `+` mode didn't work the first time I tried it in my program, so I had to experiment a bit. Though, in retrospect, I think I somehow messed up implementing it. Luckily it worked and it saved me a lot of thinking. I was also testing out the differences between having the `b` (the binary mode) and without it. I thought that without the binary mode, the `.bin` files would be much readable when opened in the regular text editors; I also tried it with `.txt` files, but it didn't change anything. I also had trouble with the `w` mode (write mode) since it kept erasing the previous student whenever I enroll a student in the SIS 2, unlike the sample code given in the course notes. In the end I just used the `a` mode (append mode). 
+
+Finally, I really had a hard time adjusting to random-access since I've tried accessing a `.csv` file in C before and I thought they are the same and use the same functions to parse. I used `strtok()` with the `.csv` files and I tried it with random-access and it didn't work. After rereading the course notes, I realized parsing with random-access is much easier.
+
+---
+
+## Week 9-11
+### C++
+
+C++ is cooooolllll!!!!! Tho there are still some functionalities that I find easier to do in C than in C++ like being able to format how the `printf` prints 2 decimal places in floats; doing that in C++ requires using another library (idk if there's an easier method for this). But overall, I like how flexible C++ is and how it offers more built-in data types than C (like `bool` and `string`). I also had fun trying out exception handling. I like C++ more than C. `C++ > C` (tho it returns false if put into code *lol*)
+
+There are also a lot of concepts in C++ that I'm still not familiar with, like namespaces, references,  the `>>`,  `<<`, and `::` operators, and templates. But I guess I'll understand them deeper if I'll code in C++ more and explore these concepts.
+
+I'm also not familiar with file reading in C++. I did some readings aaand I came into the conclusion that I need to actually code using these functions in order to fully understand how they work. One thing I've learned from this course is to not be complacent on how simple the code from online tutorials and from the course notes are because it's much more complicated than it seems. I'm *planning* to code more in C++ during the break.
+
+I've had experience using classes in Javascript when I did my immersion way back when I was in senior high so it was easier to comprehend. Tho the private, public, and protected access specifiers are kinda new to me so I just tested their boundaries when I started doing the exercises to really understand them. All in all, classes are interesting. I kinda wanna learn Object Oriented Programming.
+
+---
+
+## Week 12
+### Code reuse
+
+Code reuse is a bit complicated to understand. There are a lot of new concepts being introduced and using them would be much more confusing  than previously introduced concepts. Tho the `is-a` and `has-a` phrases are helpful in establishing the difference between composition and inheritance and making it more understandable. 
+
+Doing the exercise, I had a hard time figuring out how to do the constructor in the derived classes. Thankfully, a blockmate helped me out and I learned that I can use the `:` operator between the constructor of the derived class and constructor of the base class. 
+
+I don't know if this is really the case but I found similarities in having the `::`  operator when using the `std `namespace, the `Package` class , and the `Math` class from the course notes, and I came into conclusion that they are kinda similar. Like, we use the `::` operator to access the particular function found in that particular group of functions. It's like the `.` or `->` operators in pointers, except we don't really have to initialize a pointer variable.  
+
+Overall, code reuse is interesting and I kinda wanna do more programming exercises regarding this topic. 
+
+
+
+
+

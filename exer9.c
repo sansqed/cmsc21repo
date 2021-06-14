@@ -419,7 +419,7 @@ void editStudent (SRecord *record, int index, int fieldToEdit){
             printf("Year level (%d): ", s->yrLevel);
             scanf("%d", &s->yrLevel);
             
-            printf("Error! Invalid year level.\n");
+            // printf("Error! Invalid year level.\n");
             break;
 
         case 6:                                                     // age
